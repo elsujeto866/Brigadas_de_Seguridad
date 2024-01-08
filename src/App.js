@@ -1,11 +1,9 @@
-
-import Button from "@mui/material/Button";
+import ContenedorGeneral from "./components/ContenedorGeneral"
 
 export default function App() {
   return(
     <div>
-      <h1>Brigadas de Seguridad</h1>
-      <Button variant = "contained">Login</Button>
+      <ContenedorGeneral titulo="Crear Grupo"/>
     </div>
   )
 

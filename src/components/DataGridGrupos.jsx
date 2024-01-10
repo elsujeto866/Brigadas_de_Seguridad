@@ -8,7 +8,7 @@ const columns = [
  {
     field: 'numeroDeIntegrantes',
     headerName: 'Número de integrantes',
-    width: 150,
+    width: 250,
  },
  {
     field: 'coordinador',
@@ -18,7 +18,7 @@ const columns = [
  {
     field: 'telefono',
     headerName: 'Teléfono',
-    width: 150,
+    width: 130,
  },
 ];
 
@@ -31,7 +31,7 @@ const rows = [
 
 export default function DataGridGrupos() {
  return (
-    <Box sx={{ height: 400, width: '85%'}}>
+    <Box sx={{ height: 400, width:900}}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -42,7 +42,7 @@ export default function DataGridGrupos() {
             },
           },
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[4]}
         checkboxSelection
         disableRowSelectionOnClick
       />

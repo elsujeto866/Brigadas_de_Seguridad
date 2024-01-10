@@ -97,7 +97,10 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+
 export default function ContenedorGeneral({ titulo, contenedor }) {
+
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -207,8 +210,7 @@ export default function ContenedorGeneral({ titulo, contenedor }) {
             bottom: 0,
             left: 0,
             right: 0,
-            p: 2,
-            
+            p: 2,   
           }}
         >
           <img
@@ -219,8 +221,10 @@ export default function ContenedorGeneral({ titulo, contenedor }) {
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+
         <DrawerHeader />
         {contenedor}
+
       </Box>
     </Box>
   );

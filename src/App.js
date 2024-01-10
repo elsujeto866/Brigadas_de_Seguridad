@@ -1,14 +1,18 @@
-import ContenedorGeneral from "./components/ContenedorGeneral";
-import AdmistrarGrupos from "./components/AdministrarGrupos";
-import DataGridGrupos from "./components/DataGridGrupos";
-import Box from '@mui/material/Box';
-import CrearGrupo from "./components/CrearGrupo";
+
+//import ContenedorGeneral from "./components/ContenedorGeneral";
+import AdmistrarGrupos from './components/AdministrarGrupos';
+import SignInSide from './components/SignInSide';
+import ValidacionUsuarios from './components/ValidacionUsuarios';
+import ContenedorGeneral from './components/ContenedorGeneral';
+
 
 
 export default function App() {
   return (
     <div>
-      <CrearGrupo/>
+      {/*<ContenedorGeneral titulo="Crear Grupo"/>*/}
+      <ContenedorGeneral titulo='Verificar Usuario' contenido={<ValidacionUsuarios></ValidacionUsuarios>}></ContenedorGeneral>
+
     </div>
   );
 }

@@ -18,7 +18,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { colors, FormControl } from '@mui/material';
 import barrio from '../Images/Barrio_seg.png';
 
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -34,7 +34,7 @@ const theme = createTheme({
 
 export default function SignInSide() {
 
-  const navigate = useNavigate();
+  /*const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
 
@@ -44,7 +44,7 @@ export default function SignInSide() {
 
     // Realiza la redirección a ValidacionUsuarios
     navigate('/components/ValidacionUsuarios');
-  };
+  };*/
 
 
   return (
@@ -93,7 +93,7 @@ export default function SignInSide() {
               />
               </Grid>
               
-              <Button onClick={handleIrAOtraInterfaz} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} style={{ borderRadius:'80px' }} > <b>LOGIN</b> 
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} style={{ borderRadius:'80px' }} > <b>LOGIN</b> 
               
               </Button>
 

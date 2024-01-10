@@ -18,8 +18,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+
+//Componentes
 import BotonGeneral from "./BotonGeneral";
-import ImgBrigadaPanel from "./assets/img/imagen-panel.png";
+import DataGridGrupos from "./DataGridGrupos";
+import TextField from "@mui/material/TextField";
 
 const drawerWidth = 240;
 
@@ -94,7 +97,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function ContenedorGeneral({ titulo }) {
+export default function AdministrarGrupos({ titulo }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -170,7 +173,7 @@ export default function ContenedorGeneral({ titulo }) {
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash"].map((text, index) => (
+          {["All mail", "Trash", "Spam"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
@@ -198,57 +201,44 @@ export default function ContenedorGeneral({ titulo }) {
             </ListItem>
           ))}
         </List>
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            p: 2,
-            
-          }}
-        >
-          <img
-            src={ImgBrigadaPanel}
-            alt="Brigada de Seguridad"
-            style={{ width: "100%", height: "auto" }}
-          />
-        </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-          <BotonGeneral texto="Ingresar" />
-        </Box>
+        <div>
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 0, width: "135ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField id="outlined-basic" label="Grupo" variant="outlined" />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexdirection: "row",
+              margin: 1,
+            }}
+          >
+            <BotonGeneral texto="Buscar" />
+          </Box>
+          <DataGridGrupos />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexdirection: "row",
+              margin: 1,
+            }}
+          >
+            <BotonGeneral texto="Nuevo" />
+            <BotonGeneral texto="Editar" />
+            <BotonGeneral texto="Eliminar" />
+          </Box>
+        </div>
       </Box>
     </Box>
   );

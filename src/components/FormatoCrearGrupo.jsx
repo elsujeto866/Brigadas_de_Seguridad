@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import imgMapa from './assets/img/imagen-mapa.jpg'
+import imgMapa from '../assets/img/imagen-mapa.jpg'
 import './styles/formatoCrearGrupo.css';
 
 

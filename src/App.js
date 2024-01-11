@@ -1,18 +1,24 @@
-
-//import ContenedorGeneral from "./components/ContenedorGeneral";
-import AdmistrarGrupos from './components/AdministrarGrupos';
-import SignInSide from './components/SignInSide';
-import ValidacionUsuarios from './components/ValidacionUsuarios';
-import ContenedorGeneral from './components/ContenedorGeneral';
-
-
+import CrearGrupo from "./pages/CrearGrupo";
+import SingInSide from "./pages/SignInSide";
+import NotFoundPage from "./pages/NotFoundPage";
+import AdministrarGruposPage from "./pages/AdministrarGruposPage";
+import AdministrarUsuarioPage from "./pages/AdministrarUsuarioPage";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
 
 export default function App() {
   return (
-    <div>
-      {/*<ContenedorGeneral titulo="Crear Grupo"/>*/}
-      <ContenedorGeneral titulo='Verificar Usuario' contenido={<ValidacionUsuarios></ValidacionUsuarios>}></ContenedorGeneral>
-
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<SingInSide />}/>
+        <Route path="/administrar-grupos" element={<AdministrarGruposPage/>}/>
+        <Route path="/administrar-usuarios" element={<AdministrarUsuarioPage/>}/>
+        <Route path="/crear-grupo" element={<CrearGrupo/>}/>
+        <Route path="*" element={<NotFoundPage/>}/>
+      </Routes>
+    </Router>
   );
 }

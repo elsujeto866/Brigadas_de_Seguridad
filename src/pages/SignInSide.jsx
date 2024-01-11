@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,14 +8,12 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GoogleIcon from '@mui/icons-material/Google';
-import { colors, FormControl } from '@mui/material';
-import barrio from '../Images/Barrio_seg.png';
+import barrio from '../assets/img/Barrio_seg.png';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -28,10 +25,6 @@ const theme = createTheme({
   },
 });
 
-
-
-
-
 export default function SignInSide() {
 
   const navigate = useNavigate();
@@ -41,7 +34,6 @@ export default function SignInSide() {
   const handleIrAOtraInterfaz = () => {
     // Cambia el estado open a true para cerrar la interfaz de SignInSide
     setOpen(true);
-
     // Realiza la redirección a ValidacionUsuarios
     navigate('/components/ValidacionUsuarios');
   };
@@ -50,6 +42,7 @@ export default function SignInSide() {
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh', backgroundColor: '#093170' }}>
+      <CssBaseline />
         <Grid className='contenedor1' item xs={6} sm={4} md={7} align='center'>
           <img src={barrio} alt="Logo" 
             style={{ width: '100%', maxWidth: '290px', marginTop: '80px', marginBottom:'20px', display: 'block' }}/>

@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 
-function FormatoValidarUsuario() {
+function ValidarUsuario() {
   const datosUsuarios = [
     { id: 1, nombre: "Mario", telefono: 9897789, direccion: "Quito" },
   ];
@@ -50,4 +50,4 @@ function FormatoValidarUsuario() {
   );
 }
 
-export default FormatoValidarUsuario;
+export default ValidarUsuario;

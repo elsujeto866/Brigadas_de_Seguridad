@@ -1,8 +1,9 @@
-import CrearGrupo from "./pages/CrearGrupo";
+import CrearGrupoPage from "./pages/CrearGrupoPage";
 import SingInSide from "./pages/SignInSide";
 import NotFoundPage from "./pages/NotFoundPage";
 import AdministrarGruposPage from "./pages/AdministrarGruposPage";
 import AdministrarUsuarioPage from "./pages/AdministrarUsuarioPage";
+import EditarGrupoPage from "./pages/EditarGrupoPage";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,7 +17,8 @@ export default function App() {
         <Route path="/" element={<SingInSide />}/>
         <Route path="/administrar-grupos" element={<AdministrarGruposPage/>}/>
         <Route path="/administrar-usuarios" element={<AdministrarUsuarioPage/>}/>
-        <Route path="/crear-grupo" element={<CrearGrupo/>}/>
+        <Route path="/crear-grupo" element={<CrearGrupoPage/>}/>
+        <Route path="/editar-grupo" element={<EditarGrupoPage/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </Router>

@@ -1,11 +1,11 @@
 import React from 'react';
 import ContenedorGeneral from '../components/ContenedorGeneral';
-import FormatoAdministrarGrupos from '../components/FormatoAdministrarGrupos';
+import AdministrarGrupos from '../components/AdministrarGrupos';
 
 function AdministrarGruposPage() {
   return (
     <div>
-        <ContenedorGeneral titulo="Administrar Grupo" contenedor={<FormatoAdministrarGrupos/>}/>
+        <ContenedorGeneral titulo="Administrar Grupo" contenedor={<AdministrarGrupos/>}/>
     </div>
   )
 }

@@ -14,20 +14,19 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GoogleIcon from '@mui/icons-material/Google';
 import barrio from '../assets/img/Barrio_seg.png';
-
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#ffe0b2', // Color azul principal
+      main: '#ffe0b2', 
     },
   },
 });
 
 export default function SignInSide() {
 
-  const navigate = useNavigate();
+  /*const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);
 
@@ -36,7 +35,7 @@ export default function SignInSide() {
     setOpen(true);
     // Realiza la redirección a ValidacionUsuarios
     navigate('/components/ValidacionUsuarios');
-  };
+  };*/
 
 
   return (
@@ -86,7 +85,7 @@ export default function SignInSide() {
               />
               </Grid>
               
-              <Button onClick={handleIrAOtraInterfaz} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} style={{ borderRadius:'80px' }} > <b>LOGIN</b> 
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} style={{ borderRadius:'80px' }} > <b>LOGIN</b> 
               
               </Button>
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import imgMapa from '../assets/img/imagen-mapa.jpg'
-import './styles/formatoCrearGrupo.css';
+import './styles/crearGrupo.css';
 
 
-function FormatoCrearGrupo() {
+function CrearGrupo() {
     const [nombreGrupo, setNombreGrupo] = useState('');
     
   
@@ -23,4 +23,4 @@ function FormatoCrearGrupo() {
   )
 }
 
-export default FormatoCrearGrupo
+export default CrearGrupo

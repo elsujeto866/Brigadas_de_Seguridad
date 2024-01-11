@@ -17,7 +17,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import BotonGeneral from "./BotonGeneral";
-import ImgBrigadaPanel from "./assets/img/imagen-panel.png";
+import ImgBrigadaPanel from "../assets/img/Barrio_se.png";
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import Groups3Icon from '@mui/icons-material/Groups3';
 import HowToRegIcon from '@mui/icons-material/HowToReg';

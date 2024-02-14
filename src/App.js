@@ -4,6 +4,9 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AdministrarGruposPage from "./pages/AdministrarGruposPage";
 import AdministrarUsuarioPage from "./pages/AdministrarUsuarioPage";
 import EditarGrupoPage from "./pages/EditarGrupoPage";
+
+import CrearHorariosPage from "./pages/CrearHorariosPage";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,6 +22,9 @@ export default function App() {
         <Route path="/administrar-usuarios" element={<AdministrarUsuarioPage/>}/>
         <Route path="/crear-grupo" element={<CrearGrupoPage/>}/>
         <Route path="/editar-grupo" element={<EditarGrupoPage/>}/>
+
+        <Route path="/crear-horarios" element={<CrearHorariosPage/>}/>
+
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </Router>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -24,32 +25,54 @@ const theme = createTheme({
   },
 });
 
+//de prueba este admin
+const adminCredentials = {
+  username: 'admin',
+  password: 'admin123',
+};
+//
+
 export default function SignInSide() {
 
-  /*const navigate = useNavigate();
+  ///funcionamiento del login
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState(false);
+  const navigate = useNavigate();
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleIrAOtraInterfaz = () => {
-    // Cambia el estado open a true para cerrar la interfaz de SignInSide
-    setOpen(true);
-    // Realiza la redirección a ValidacionUsuarios
-    navigate('/components/ValidacionUsuarios');
-  };*/
-
+  const handleLogin = () => {
+    if (username === adminCredentials.username && password === adminCredentials.password) {
+      // Iniciar sesión exitosa, redirigir a la página de Crear Horarios
+      navigate("/administrar-usuarios");
+    } else {
+      // Error de inicio de sesión, mostrar mensaje de acceso denegado
+      setError(true);
+    }
+  };
+  ///
 
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh', backgroundColor: '#093170' }}>
       <CssBaseline />
+
         <Grid className='contenedor1' item xs={6} sm={4} md={7} align='center'>
           <img src={barrio} alt="Logo" 
             style={{ width: '100%', maxWidth: '290px', marginTop: '80px', marginBottom:'20px', display: 'block' }}/>
           <Typography variant="h4" align="center" paragraph style={{ color: 'white', margin:'30px' }}> Bienvenido a la Plataforma </Typography>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-              <Button variant="contained" color="primary" style={{ borderRadius:'100px' }}> <FacebookIcon /> </Button>
-              <Button variant="contained" color="primary" style={{ marginBottom: '10px', margin:'20px', borderRadius:'100px' }}> <InstagramIcon /> </Button>
-              <Button variant="contained" color="primary" style={{ borderRadius:'100px' }}> <GoogleIcon /> </Button>
+              <Button variant="contained" color="primary" style={{ borderRadius:'100px' }} 
+              component={RouterLink} 
+              to="https://www.facebook.com/"
+              target="_blank"> <FacebookIcon /> </Button>
+              <Button variant="contained" color="primary" style={{ marginBottom: '10px', margin:'20px', borderRadius:'100px' }}
+              component={RouterLink} 
+              to="https://www.instagram.com/"
+              target="_blank"> <InstagramIcon /> </Button>
+              <Button variant="contained" color="primary" style={{ borderRadius:'100px' }}
+              component={RouterLink} 
+              to="https://www.google.com/"
+              target="_blank"> <GoogleIcon /> </Button>
             </div>
         </Grid>
           
@@ -71,10 +94,15 @@ export default function SignInSide() {
             <Box component="form" noValidate  sx={{ mt: 2 }}>
               <Grid container>
                 <label style={{color:'white'}}><b>Usuario</b></label>
-                <TextField margin="normal" variant='filled' required fullWidth id="usuario" label="Usuario" name="usuario" autoFocus />
+
+                <TextField margin="normal" variant='filled' required fullWidth id="usuario" label="Usuario" name="usuario" autoFocus
+                value={username}
+                onChange={(e) => setUsername(e.target.value)} />
                 <Link href="#" variant="body2"> Olvidaste tu usuario? </Link>
 
-                <TextField margin="normal" variant='outlined' required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" />
+                <TextField margin="normal" variant='outlined' required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}/>
                 <Link href="#" variant="body2"> olvidaste tu password? </Link>
               </Grid>
             
@@ -85,8 +113,16 @@ export default function SignInSide() {
               />
               </Grid>
               
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} style={{ borderRadius:'80px' }} > <b>LOGIN</b> 
-              
+              {error && (
+                <Typography variant="body2" color="error" align="center" gutterBottom>
+                  Nombre de usuario o contraseña incorrectos.
+                </Typography>
+              )}
+
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} style={{ borderRadius:'80px' }} 
+              onClick={handleLogin}
+              > 
+              <b>LOGIN</b> 
               </Button>
 
               

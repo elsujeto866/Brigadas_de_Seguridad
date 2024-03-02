@@ -1,7 +1,8 @@
 import express from 'express'
 import morgan from 'morgan'
-import authRoutes from './routes/auth.routes.js'
+import adminRoutes from './routes/admin.routes.js'
 import cookieParser from 'cookie-parser'
+import brigadistaRoutes from './routes/brigadista.routes.js'
 
 const app = express()
 
@@ -12,7 +13,11 @@ app.use(express.json())
 //Permite que el servidor covierta una cookien en json
 app.use(cookieParser())
 
-//Rutas relacionadas con la autenticación
-app.use("/api",authRoutes)
+//Rutas relacionadas con el admin
+app.use("/api",adminRoutes)
+
+//Rutas relacionadas con el brigadista
+app.use("/api/brigadista",brigadistaRoutes)
+
 
 export default app

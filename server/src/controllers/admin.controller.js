@@ -2,7 +2,7 @@ import Admin from "../models/admin.model.js";
 import bcrypt from "bcryptjs";
 import { createToken } from "../libs/jwt.js";
 
-export const register = async (req, res) => {
+export const registerAdmin = async (req, res) => {
   const { email, password, name } = req.body;
 
   try {
@@ -12,31 +12,30 @@ export const register = async (req, res) => {
       email,
       name,
       password: passwordHash,
+      role: "admin",
     });
 
     const adminSaved = await newAdmin.save();
     //crear token
     const token = await createToken({
       id: adminSaved._id,
+      role: adminSaved.role,
     });
 
     res.cookie("token", token);
-    /*res.json({
-      message: "Admin created successfully",
-    });*/
-
     //respuesta del servidor con un objeto json
     res.json({
       _id: adminSaved._id,
       name: adminSaved.name,
       email: adminSaved.email,
+      role: adminSaved.role,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-export const login = async (req, res) => {
+export const loginAdmin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -52,6 +51,7 @@ export const login = async (req, res) => {
     //crear token
     const token = await createToken({
       id: adminFound._id,
+      role: adminFound.role,
     });
     res.cookie("token", token);
     //respuesta del servidor con un objeto json
@@ -59,18 +59,19 @@ export const login = async (req, res) => {
       _id: adminFound._id,
       name: adminFound.name,
       email: adminFound.email,
+      role: adminFound.role,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-export const logout = async(req, res) => {
+export const logoutAdmin = async(req, res) => {
     res.clearCookie('token');
     return res.sendStatus(200);
 }
 
-export const profile = async (req, res) => {
+export const profileAdmin = async (req, res) => {
     //Obtengo el administrador validado sin el password
     const userFound = await Admin.findById(req.user.id).select('-password');
     //Si no encuentro el administrador

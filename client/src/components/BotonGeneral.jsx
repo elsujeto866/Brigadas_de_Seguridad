@@ -4,7 +4,7 @@ import "./styles/botonGeneral.css";
 export default function BotonGeneral({texto}) {
   return(
     <>
-        <Button className = "boton-general" variant="contained">{texto}</Button>
+        <Button className = "boton-general" variant="contained" onClick={onClick}>{texto}</Button>
     </>
   );
 }

@@ -11,7 +11,6 @@ jwt.verify(token, TOKEN_SECRET, (err, user) => {
     if (err) return res.status(401).json({message: "Token is not valid"});
     //guardar el usuario en el objeto req
     req.user = user;
-    
     next();
 })
    

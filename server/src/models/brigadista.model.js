@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const brigadistaSchema = new mongoose.Schema({
+const BrigadistaSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -39,8 +39,8 @@ const brigadistaSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
-    trim: true,
+    required: [true]
+    
   },
   telephone: {
     type: String,
@@ -81,9 +81,10 @@ const brigadistaSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  role: String,
+  rol: {
+    type: String,
+  },
   groups: [{ type: mongoose.Schema.Types.ObjectId, ref: "Group" }],
-  date: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Brigadista", brigadistaSchema);
+export default mongoose.model("Brigadista", BrigadistaSchema);

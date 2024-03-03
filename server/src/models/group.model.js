@@ -7,14 +7,13 @@ const groupSchema = new mongoose.Schema({
     },
     zone: {
         type: String,
-        required: true,
 
     },
     date: { type: Date, default: Date.now },
     schedule: [{ type: mongoose.Schema.Types.ObjectId, ref: "Schedule" }],
     coordinator: { type: mongoose.Schema.Types.ObjectId, ref: 'Brigadista' },
     members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Brigadista' }],
-    maxMembers: {type: Number, required: true}
+    maxMembers: {type: Number}
     
 });
 

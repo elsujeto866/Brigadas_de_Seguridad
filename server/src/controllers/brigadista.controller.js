@@ -3,14 +3,17 @@ import bcrypt from "bcryptjs";
 import { createToken } from "../libs/jwt.js";
 
 export const registerBrigadista = async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password, firstName, lastName, telephone, cedula } = req.body;
 
   try {
     //encriptar la contraseña
     const passwordHash = await bcrypt.hash(password, 10);
     const newBrigadista = new Brigadista({
       email,
-      name,
+      firstName, 
+      lastName, 
+      telephone,
+      cedula,
       password: passwordHash,
       role: "brigadista",
     });

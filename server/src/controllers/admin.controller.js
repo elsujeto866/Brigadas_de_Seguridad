@@ -4,7 +4,6 @@ import { createToken } from "../libs/jwt.js";
 
 export const registerAdmin = async (req, res) => {
   const { email, password, name } = req.body;
-
   try {
     //encriptar la contraseña
     const passwordHash = await bcrypt.hash(password, 10);

@@ -12,23 +12,57 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 function ValidarUsuario() {
-  
-  const datosUsuarios = [
-    { id: 1, nombre: "Mario", cedula: 178929381, telefono: 9897789, email: "copito@gmail.com" },
-    { id: 2, nombre: "Copo", cedula: 178929382, telefono: 9897739, email: "copito123@gmail.com" }
-  ];
+  const [brigadistas, setBrigadistas] = useState([]);
+
+  useEffect(() => {
+    // Realizar la solicitud HTTP GET para obtener la lista de brigadistas
+    axios.get("http://localhost:8000/api/brigadistas")
+      .then((response) => {
+        // Filtrar los brigadistas con verificación false
+        const brigadistasVerificacionFalse = response.data.filter(
+          (brigadista) => brigadista.verificacion === false
+        );
+        console.log(brigadistasVerificacionFalse);
+        setBrigadistas(brigadistasVerificacionFalse); // Actualizar el estado con los datos de los brigadistas filtrados
+      })
+      .catch((error) => {
+        console.error("Error al obtener la lista de brigadistas:", error);
+      });
+  }, []); // Ejecutar solo una vez al cargar el componente
 
   const handleAceptarUsuario = (id) => {
     // Lógica para aceptar usuario con el ID proporcionado
     console.log(`Usuario aceptado: ${id}`);
+    // Enviar una solicitud para actualizar el campo 'verificacion' a true
+    axios.put(`http://localhost:8000/api/brigadistas/${id}`, { verificacion: true })
+      .then(response => {
+        console.log('Campo de verificación actualizado correctamente:', response.data);
+        // Después de actualizar el campo, actualizamos la lista de brigadistas mostrada en la tabla
+        setBrigadistas(brigadistas.filter(brigadista => brigadista._id !== id));
+      })
+      .catch(error => {
+        console.error('Error al actualizar el campo de verificación:', error);
+      });
   };
 
   const handleRechazarUsuario = (id) => {
     // Lógica para rechazar usuario con el ID proporcionado
-    console.log(`Usuario rechazado: ${id}`);
+  console.log(`Usuario rechazado: ${id}`);
+  // Enviar una solicitud para eliminar el usuario
+  axios.delete(`http://localhost:8000/api/brigadistas/${id}`)
+    .then(response => {
+      console.log('Usuario eliminado correctamente:', response.data);
+      // Después de eliminar al usuario, actualizamos la lista de brigadistas mostrada en la tabla
+      setBrigadistas(brigadistas.filter(brigadista => brigadista._id !== id));
+    })
+    .catch(error => {
+      console.error('Error al eliminar el usuario:', error);
+    });
   };
-
 
   return (
     <div>
@@ -46,26 +80,29 @@ function ValidarUsuario() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {datosUsuarios.map((usuario) => (
-                <TableRow key={usuario.id}>
-                  <TableCell>{usuario.id}</TableCell>
-                  <TableCell>{usuario.nombre}</TableCell>
-                  <TableCell>{usuario.cedula}</TableCell>
-                  <TableCell>{usuario.telefono}</TableCell>
-                  <TableCell>{usuario.email}</TableCell>
+              {brigadistas.map((brigadista) => (
+                <TableRow key={brigadista._id}>
+                  <TableCell>{brigadista._id}</TableCell>
+                  <TableCell>{brigadista.nombre}</TableCell>
+                  <TableCell>{brigadista.cedula}</TableCell>
+                  <TableCell>{brigadista.telefono}</TableCell>
+                  <TableCell>{brigadista.email}</TableCell>
                   <TableCell>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      
-                      <Box sx={{ mt: 1 }}> {/* Agregar margen top */}
+                      <Box sx={{ mt: 1 }}>
+                        {" "}
+                        {/* Agregar margen top */}
                         <BotonGeneral
                           texto="Aceptar Usuario"
-                          onClick={() => handleAceptarUsuario(usuario.id)}
+                          onClick={() => handleAceptarUsuario(brigadista._id)}
                         />
                       </Box>
-                      <Box sx={{ mt: 1 }}> {/* Agregar margen top */}
+                      <Box sx={{ mt: 1 }}>
+                        {" "}
+                        {/* Agregar margen top */}
                         <BotonGeneral
                           texto="Rechazar Usuario"
-                          onClick={() => handleRechazarUsuario(usuario.id)}
+                          onClick={() => handleRechazarUsuario(brigadista._id)}
                         />
                       </Box>
                     </Box>
@@ -76,7 +113,6 @@ function ValidarUsuario() {
           </Table>
         </TableContainer>
       </Grid>
-
     </div>
   );
 }

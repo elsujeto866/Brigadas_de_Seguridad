@@ -1,55 +1,79 @@
-import Group from '../models/group.model.js';
-
-export const getGroups = async (req, res) => {
-    try {
-        const groups = await Group.find();
-        res.status(200).json(groups);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-export const getGroup = async (req, res) => {
-    try {
-        const group = await Group.findById(req.params.id);
-        if (group == null) {
-            return res.status(404).json({ message: 'Cannot find group' });
-        }
-        res.group = group;
-        res.status(200).json(res.group);
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
-    }
-};
+import Group from "../models/group.model.js";
 
 export const createGroup = async (req, res) => {
-    const {name} = req.body;
-    const group = new Group({
-        name: name
+  const { name, zone, maxMembers } = req.body;
+
+  try {
+    const newGroup = new Group({
+      name,
+      zone,
+      maxMembers,
     });
 
-    try {
-        const newGroup = await group.save();
-        res.status(201).json(newGroup);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+    const groupSaved = await newGroup.save();
+
+    res.json(groupSaved);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getGroups = async (req, res) => {
+  try {
+    const groups = await Group.find();
+    res.json(groups);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getGroupById = async (req, res) => {
+  const { groupId } = req.params;
+
+  try {
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
     }
+    res.json(group);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const updateGroup = async (req, res) => {
-    try {
-        const updatedGroup = await Group.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.status(200).json(updatedGroup);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+  const { groupId } = req.params;
+  const { name, zone, maxMembers } = req.body;
+
+  try {
+    const updatedGroup = await Group.findByIdAndUpdate(
+      groupId,
+      { name, zone, maxMembers },
+      { new: true }
+    );
+
+    if (!updatedGroup) {
+      return res.status(404).json({ message: "Group not found" });
     }
+
+    res.json(updatedGroup);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const deleteGroup = async (req, res) => {
-    try {
-        await Group.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: 'Deleted Group' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+  const { groupId } = req.params;
+
+  try {
+    const deletedGroup = await Group.findByIdAndDelete(groupId);
+
+    if (!deletedGroup) {
+      return res.status(404).json({ message: "Group not found" });
     }
+
+    res.json({ message: "Group deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };

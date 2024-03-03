@@ -39,13 +39,11 @@ const brigadistaSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
-    trim: true,
+    required: [true],
   },
   telephone: {
     type: String,
     required: true,
-    trim: true,
     validate: {
       validator: function (value) {
         // Expresión regular para permitir solo números y longitud de 10 dígitos
@@ -81,9 +79,11 @@ const brigadistaSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  role: String,
+  rol: {
+    type: String,
+    default: "brigadista",
+  },
   groups: [{ type: mongoose.Schema.Types.ObjectId, ref: "Group" }],
-  date: { type: Date, default: Date.now },
 });
 
 export default mongoose.model("Brigadista", brigadistaSchema);

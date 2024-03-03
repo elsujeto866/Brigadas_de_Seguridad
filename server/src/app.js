@@ -4,6 +4,7 @@ import adminRoutes from './routes/admin.routes.js'
 import cookieParser from 'cookie-parser'
 import brigadistaRoutes from './routes/brigadista.routes.js'
 import scheduleRoutes from './routes/schedule.routes.js'
+import groupRoutes from './routes/group.routes.js';
 
 const app = express()
 
@@ -22,6 +23,9 @@ app.use("/api/brigadista",brigadistaRoutes)
 
 //Rutas relacionadas con los horarios
 app.use("/api",scheduleRoutes)
+
+// Rutas relacionadas con los grupos
+app.use("/api/group", groupRoutes); // Agrega las rutas del grupo
 
 
 export default app

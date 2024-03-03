@@ -1,7 +1,7 @@
 import app from "./app.js";
 import connectDB from "./db.js";
 
-const port = 3000;
+const port = 8000;
 //Conexión a la base de datos
 connectDB();
 //Iniciando el servidor

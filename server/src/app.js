@@ -4,9 +4,11 @@ import adminRoutes from './routes/admin.routes.js'
 import cookieParser from 'cookie-parser'
 import brigadistaRoutes from './routes/brigadista.routes.js'
 import scheduleRoutes from './routes/schedule.routes.js'
+import cors from 'cors'
 
 const app = express()
 
+app.use(cors())
 //Librería que nos muestra por consola las peticiones que se hacen al servidor
 app.use(morgan('dev'))
 //Permite que el servidor entienda los datos en formato json

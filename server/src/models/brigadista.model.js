@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const BrigadistaSchema = new mongoose.Schema({
+const brigadistaSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -39,13 +39,11 @@ const BrigadistaSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true]
-    
+    required: [true],
   },
   telephone: {
     type: String,
     required: true,
-    trim: true,
     validate: {
       validator: function (value) {
         // Expresión regular para permitir solo números y longitud de 10 dígitos
@@ -83,8 +81,9 @@ const BrigadistaSchema = new mongoose.Schema({
   },
   rol: {
     type: String,
+    default: "brigadista",
   },
   groups: [{ type: mongoose.Schema.Types.ObjectId, ref: "Group" }],
 });
 
-export default mongoose.model("Brigadista", BrigadistaSchema);
+export default mongoose.model("Brigadista", brigadistaSchema);

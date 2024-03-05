@@ -14,6 +14,11 @@ import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios'; // Importa axios para realizar solicitudes HTTP
 import { useEffect } from 'react';
 ///
+///
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import Button from '@mui/material/Button';
+///
  
 function CrearGrupo() {
   /////  
@@ -22,6 +27,20 @@ function CrearGrupo() {
   //const [fechaActual, setFechaActual] = useState();
   const [horaSeleccionada, setHoraSeleccionada] = useState(''); // este es para el select
  
+  
+  const [numeroIntegrantes, setNumeroIntegrantes] = useState('');
+  const [zona, setZona] = useState('');
+
+  ///
+  // Ejemplo de puntos estáticos, reemplaza estos con tus datos reales
+  const puntos = [
+    { id: 1, position: [-0.266902, -78.532530], name: "Punto 1" },
+    { id: 2, position: [-0.270406, -78.516898], name: "Punto 2" },
+    { id: 3, position: [-0.278087, -78.524310], name: "Punto 3" },
+    // Agrega más puntos según sea necesario
+  ];
+  ///
+
   useEffect(() => {
     if (fechaSeleccionada) {
       const fechaAuxiliar= dayjs(fechaSeleccionada).toISOString()
@@ -55,18 +74,77 @@ function CrearGrupo() {
   const handleNombreGrupoChange = (event) => {
     setNombreGrupo(event.target.value);
   };
+
+  const handleNumeroIntegrantesChange = (event) => {
+    const valor = event.target.value;
+    // Permite solo números
+    if (!isNaN(valor) && /^\d*$/.test(valor)) {
+      setNumeroIntegrantes(valor);
+    }
+  };
+
+  const handleMarkerClick = (position) => {
+    setZona(`${position[0]}, ${position[1]}`);
+  };
+
  
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8000/api/group/new', {
+        name: nombreGrupo,
+        maxMembers: numeroIntegrantes,
+        date: fechaSeleccionada,
+        zone: zona,
+        schedule: horaSeleccionada // Aquí necesitarás modificar según la estructura de datos de la hora seleccionada
+      });
+      console.log('Grupo creado:', response.data);
+      // Aquí puedes hacer alguna acción adicional después de crear el grupo, como redirigir a otra página o mostrar un mensaje de éxito.
+    } catch (error) {
+      console.error('Error al crear el grupo:', error);
+      // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario.
+    }
+  };
  
    
   return (
+    <form onSubmit={handleSubmit}>
     <Box className="formato-crear-grupo-container"> {/* Aplica una clase al contenedor */}
+      
       <p className="label">Nombre de Grupo:</p> {/* Aplica una clase al elemento de texto */}
       <input type="text" value={nombreGrupo} onChange={handleNombreGrupoChange} className="input" /> {/* Aplica una clase al input */}
       <p className="label">Zona:</p> {/* Aplica una clase al elemento de texto */}
-      <input type="text" value="" className="input" /> {/* Aplica una clase al input */}
-      <img src={imgMapa} alt="Mapa" className="map-image" /> {/* Aplica una clase a la imagen */}
- 
- 
+      <TextField
+          type="text"
+          value={zona}
+          disabled
+          variant="outlined"
+          className="input"
+        />
+
+      <MapContainer center={[-0.1807, -78.4678]} zoom={13} scrollWheelZoom={false} style={{ height: '400px', width: '100%' }}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        {puntos.map(punto => (
+          <Marker 
+          key={punto.id} 
+          position={punto.position}
+          eventHandlers={{
+            click: () => {
+              handleMarkerClick(punto.position);
+            }
+          }}
+        >
+          <Popup>{punto.name}</Popup>
+        </Marker>
+        ))}
+      </MapContainer>
+
+      <p></p>
+
+
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Fecha de inicio"
@@ -76,9 +154,7 @@ function CrearGrupo() {
         />
       </LocalizationProvider>
            
-           
-           
-           
+             
       <p className="label">Horario:</p>
       <Select
         value={horaSeleccionada}
@@ -87,12 +163,27 @@ function CrearGrupo() {
       >
         {horasDisponibles.map((hora, index) => (
           <MenuItem key={index} value={hora}>
-          {hora.horaInicio} - {hora.horaFin}
+          {hora.horaInicio} - {hora.horaFin} 
         </MenuItem>
         ))}
       </Select>
+
+      <p className="label">Número de Integrantes:</p>
+        <TextField
+          type="text"
+          value={numeroIntegrantes}
+          onChange={handleNumeroIntegrantesChange}
+          variant="outlined"
+          className="input"
+        />
+        <Button type="submit" variant="contained" style={{ marginTop: '20px' }}>
+          Guardar
+        </Button>
+
+      
  
     </Box>
+    </form>
   )
 }
  

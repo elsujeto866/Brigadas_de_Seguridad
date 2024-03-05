@@ -7,13 +7,27 @@ const groupSchema = new mongoose.Schema({
     },
     zone: {
         type: String,
-
     },
-    date: { type: Date, default: Date.now },
-    schedule: [{ type: mongoose.Schema.Types.ObjectId, ref: "Schedule" }],
-    coordinator: { type: mongoose.Schema.Types.ObjectId, ref: 'Brigadista' },
-    members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Brigadista' }],
-    maxMembers: {type: Number}
+    date: { 
+        type: Date, 
+        default: Date.now 
+    },
+    schedule: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Schedule" 
+    }],
+    coordinator: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Brigadista',
+    }],
+    maxMembers: {
+        type: Number
+    },
+    members: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Brigadista' 
+    }]
+    
     
 });
 

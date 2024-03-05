@@ -3,7 +3,8 @@ import bcrypt from "bcryptjs";
 import { createToken } from "../libs/jwt.js";
 
 export const createBrigadista = (request, response) => {
-  const { firstName, lastName, email, password, telephone, cedula } = request.body;
+  const { firstName, lastName, email, password, telephone, cedula } =
+    request.body;
   console.log("Registrando nuevo brigadista...");
   console.log(firstName);
   Brigadista.create({
@@ -20,9 +21,20 @@ export const createBrigadista = (request, response) => {
 
 export const registerBrigadista = async (req, res) => {
   const { firstName, lastName, email, password, telephone, cedula } = req.body;
-  console.log(firstName);
-
   try {
+    //Verificar si el brigadista ya existe por su correo y cedula
+    const existingEmail = await Brigadista.findOne({ email});
+    if (existingEmail) {
+      return res
+        .status(400)
+        .json({ error: "El correo ya esta en uso" });
+    }
+    const existingCI = await Brigadista.findOne({cedula });
+    if (existingCI) {
+      return res
+        .status(400)
+        .json({ error: "La cédula ya esta en uso" });
+    }
     //encriptar la contraseña
     const passwordHash = await bcrypt.hash(password, 10);
     const newBrigadista = new Brigadista({
@@ -31,7 +43,7 @@ export const registerBrigadista = async (req, res) => {
       email,
       password: passwordHash,
       telephone,
-      cedula
+      cedula,
     });
 
     const brigadistaSaved = await newBrigadista.save();
@@ -45,9 +57,10 @@ export const registerBrigadista = async (req, res) => {
     //respuesta del servidor con un objeto json
     res.json({
       _id: brigadistaSaved._id,
-      name: brigadistaSaved.name,
+      firstName: brigadistaSaved.firstName,
+      lastName: brigadistaSaved.lastName,
       email: brigadistaSaved.email,
-      rol: brigadistaSaved.rol,
+      role: brigadistaSaved.role,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

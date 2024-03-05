@@ -5,6 +5,13 @@ import { createToken } from "../libs/jwt.js";
 export const registerAdmin = async (req, res) => {
   const { email, password, name } = req.body;
   try {
+    // Verificar si el admin ya existe
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+      return res
+        .status(400)
+        .json({ error: "Este correo ya esta en uso" });
+    }
     //encriptar la contraseña
     const passwordHash = await bcrypt.hash(password, 10);
     const newAdmin = new Admin({
@@ -41,7 +48,8 @@ export const loginAdmin = async (req, res) => {
     //buscar el admin por email
     const adminFound = await Admin.findOne({ email });
     //si no existe el admin
-    if (!adminFound) return res.status(400).json({ message: "Admin not found" });
+    if (!adminFound)
+      return res.status(400).json({ message: "Admin not found" });
     //comparar contraseñas
     const matchPassword = await bcrypt.compare(password, adminFound.password);
     // si la contraseña no coincide
@@ -65,16 +73,16 @@ export const loginAdmin = async (req, res) => {
   }
 };
 
-export const logoutAdmin = async(req, res) => {
-    res.clearCookie('token');
-    return res.sendStatus(200);
-}
+export const logoutAdmin = async (req, res) => {
+  res.clearCookie("token");
+  return res.sendStatus(200);
+};
 
 export const profileAdmin = async (req, res) => {
-    //Obtengo el administrador validado sin el password
-    const userFound = await Admin.findById(req.user.id).select('-password');
-    //Si no encuentro el administrador
-    if(!userFound) return res.status(404).json({message: "User not found"});
+  //Obtengo el administrador validado sin el password
+  const userFound = await Admin.findById(req.user.id).select("-password");
+  //Si no encuentro el administrador
+  if (!userFound) return res.status(404).json({ message: "User not found" });
 
-    return res.json(userFound);
-}
+  return res.json(userFound);
+};

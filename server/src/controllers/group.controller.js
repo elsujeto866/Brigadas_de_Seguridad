@@ -29,10 +29,10 @@ export const getGroups = async (req, res) => {
 };
 
 export const getGroupById = async (req, res) => {
-  const { groupId } = req.params;
+  const { id } = req.params;
 
   try {
-    const group = await Group.findById(groupId);
+    const group = await Group.findById(id);
     if (!group) {
       return res.status(404).json({ message: "Group not found" });
     }
@@ -43,12 +43,12 @@ export const getGroupById = async (req, res) => {
 };
 
 export const updateGroup = async (req, res) => {
-  const { groupId } = req.params;
+  const { id } = req.params;
   const { name, zone, maxMembers } = req.body;
 
   try {
     const updatedGroup = await Group.findByIdAndUpdate(
-      groupId,
+      id,
       { name, zone, maxMembers },
       { new: true }
     );
@@ -64,10 +64,10 @@ export const updateGroup = async (req, res) => {
 };
 
 export const deleteGroup = async (req, res) => {
-  const { groupId } = req.params;
+  const { id } = req.params;
 
   try {
-    const deletedGroup = await Group.findByIdAndDelete(groupId);
+    const deletedGroup = await Group.findByIdAndDelete(id);
 
     if (!deletedGroup) {
       return res.status(404).json({ message: "Group not found" });

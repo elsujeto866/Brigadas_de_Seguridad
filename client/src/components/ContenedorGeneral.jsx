@@ -23,6 +23,8 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import SettingsIcon from '@mui/icons-material/Settings';
 
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -145,9 +147,15 @@ export default function ContenedorGeneral({ titulo, contenedor }) {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Administrar Grupo", "Verificar Usuario", "Administrar Horarios"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+          {[
+            { text: "Administrar Grupo", icon: <Groups3Icon />, path: "/administrar-grupos" },
+            { text: "Verificar Usuario", icon: <HowToRegIcon />, path: "/administrar-usuarios" },
+            { text: "Administrar Horarios", icon: <ManageHistoryIcon />, path: "/crear-horarios" }
+          ].map((item) => (
+            <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
+                component={RouterLink}
+                to={item.path}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
@@ -159,16 +167,15 @@ export default function ContenedorGeneral({ titulo, contenedor }) {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                    color: "white", // Changed icon color to white
+                    color: "white",
                   }}
                 >
-                  {index === 0 ? <Groups3Icon /> : index === 1 ? <HowToRegIcon />: index === 2 ? <ManageHistoryIcon/> : null}
+                  {item.icon}
                 </ListItemIcon>
                 <ListItemText
-                  primary={text}
+                  primary={item.text}
                   sx={{ opacity: open ? 1 : 0, color: "white" }}
-                />{" "}
-                {/* Changed text color to white */}
+                />
               </ListItemButton>
             </ListItem>
           ))}

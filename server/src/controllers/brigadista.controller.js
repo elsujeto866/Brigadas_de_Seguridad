@@ -117,3 +117,24 @@ export const profileBrigadista = (req, res) => {
       res.status(500).json({ message: error.message });
     });
 };
+
+
+////
+export const getAllBrigadistas = (_, response) => {
+  Brigadista.find({})
+  .then(users => response.json(users))
+  .catch(err => response.json(err))
+}
+
+export const updateBrigadista = (request, response) => {
+  Brigadista.findOneAndUpdate({_id: request.params.id}, request.body, {new:true})
+  .then(updatedBrigadista => response.json(updatedBrigadista))
+  .catch(err => response.json(err))
+}
+
+export const deleteBrigadista = (request, response) => {
+  Brigadista.deleteOne({ _id: request.params.id })
+  .then(brigadistaDeleted => response.json(brigadistaDeleted))
+  .catch(err => response.json(err))
+}
+////

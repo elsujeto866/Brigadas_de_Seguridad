@@ -20,11 +20,11 @@ function ValidarUsuario() {
 
   useEffect(() => {
     // Realizar la solicitud HTTP GET para obtener la lista de brigadistas
-    axios.get("http://localhost:8000/api/brigadistas")
+    axios.get("http://localhost:8000/api/brigadista/all")
       .then((response) => {
         // Filtrar los brigadistas con verificación false
         const brigadistasVerificacionFalse = response.data.filter(
-          (brigadista) => brigadista.verificacion === false
+          (brigadista) => brigadista.validation === false
         );
         console.log(brigadistasVerificacionFalse);
         setBrigadistas(brigadistasVerificacionFalse); // Actualizar el estado con los datos de los brigadistas filtrados
@@ -38,7 +38,7 @@ function ValidarUsuario() {
     // Lógica para aceptar usuario con el ID proporcionado
     console.log(`Usuario aceptado: ${id}`);
     // Enviar una solicitud para actualizar el campo 'verificacion' a true
-    axios.put(`http://localhost:8000/api/brigadistas/${id}`, { verificacion: true })
+    axios.put(`http://localhost:8000/api/brigadista/${id}`, { validation: true })
       .then(response => {
         console.log('Campo de verificación actualizado correctamente:', response.data);
         // Después de actualizar el campo, actualizamos la lista de brigadistas mostrada en la tabla
@@ -53,7 +53,7 @@ function ValidarUsuario() {
     // Lógica para rechazar usuario con el ID proporcionado
   console.log(`Usuario rechazado: ${id}`);
   // Enviar una solicitud para eliminar el usuario
-  axios.delete(`http://localhost:8000/api/brigadistas/${id}`)
+  axios.delete(`http://localhost:8000/api/brigadista/${id}`)
     .then(response => {
       console.log('Usuario eliminado correctamente:', response.data);
       // Después de eliminar al usuario, actualizamos la lista de brigadistas mostrada en la tabla
@@ -73,6 +73,7 @@ function ValidarUsuario() {
               <TableRow>
                 <TableCell>ID</TableCell>
                 <TableCell>Nombre</TableCell>
+                <TableCell>Apellido</TableCell>
                 <TableCell>Cedula</TableCell>
                 <TableCell>Teléfono</TableCell>
                 <TableCell>Email</TableCell>
@@ -83,9 +84,10 @@ function ValidarUsuario() {
               {brigadistas.map((brigadista) => (
                 <TableRow key={brigadista._id}>
                   <TableCell>{brigadista._id}</TableCell>
-                  <TableCell>{brigadista.nombre}</TableCell>
+                  <TableCell>{brigadista.firstName}</TableCell>
+                  <TableCell>{brigadista.lastName}</TableCell>
                   <TableCell>{brigadista.cedula}</TableCell>
-                  <TableCell>{brigadista.telefono}</TableCell>
+                  <TableCell>{brigadista.telephone}</TableCell>
                   <TableCell>{brigadista.email}</TableCell>
                   <TableCell>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>

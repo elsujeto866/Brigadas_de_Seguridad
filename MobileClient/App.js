@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { View } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import RegistroBrigadista from "./Components/RegistroBrigadista.jsx";
+import LoginBrigadista from "./Components/LoginBrigadista.jsx";
 
-export default function App() {
+const App = () => {
+  const Stack = createNativeStackNavigator();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="LoginBrigadista"
+          component={LoginBrigadista}
+          options={{ title: "Inicio de Sesion" }}
+        />
+        <Stack.Screen
+          name="RegistroBrigadista"
+          component={RegistroBrigadista}
+          options={{ title: "Registro de Usuario" }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

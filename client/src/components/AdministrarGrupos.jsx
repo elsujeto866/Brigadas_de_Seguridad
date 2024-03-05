@@ -36,7 +36,7 @@ export default function AdministrarGrupos() {
     console.log("Seleccionado: ", selectedGroup);
     if (selectedGroup) {
       const groupId = selectedGroup;
-      navigate(`/editar-grupo/`); // Navegar a la ruta de edición con el ID seleccionado
+      navigate("/editar-grupo/" + groupId); // Navegar a la ruta de edición con el ID seleccionado
       console.log("ID: ", selectedGroup);
     } else {
       console.error("No se pudo obtener el ID del grupo seleccionado.");

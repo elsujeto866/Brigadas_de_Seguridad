@@ -2,10 +2,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 const RegistroGrupos = () => {
 
     const navigation = useNavigation();
+    const route = useRoute(); // Asegúrate de importar useRoute correctamente
+  const { brigadistaId } = route.params; // Accede a los parámetros de la ruta
   // Datos de ejemplo para los puntos en el mapa
   const puntos = [
     { id: 1, coordinate: { latitude: -0.266902, longitude: -78.532530 }, name: "Punto 1" },
@@ -17,7 +20,8 @@ const RegistroGrupos = () => {
   // Función para manejar la selección de un punto
   const handlePointSelection = (punto) => {
     // Navegar a la pantalla SeleccionGrupos y pasar el punto como parámetro
-    navigation.navigate('SeleccionGrupo', { ubicacion: punto.name , coordenadas: punto.coordinate});
+    navigation.navigate('SeleccionGrupo', { ubicacion: punto.name , coordenadas: punto.coordinate,userId: brigadistaId});
+    console.log(brigadistaId);
   };
 
 

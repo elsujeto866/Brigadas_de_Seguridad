@@ -12,13 +12,12 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-
-      <Stack.Screen
+        <Stack.Screen
           name="LoginBrigadista"
           component={LoginBrigadista}
           options={{ title: "Inicio de Sesion" }}
         />
-      <Stack.Screen
+        <Stack.Screen
           name="RegistroBrigadista"
           component={RegistroBrigadista}
           options={{ title: "Registro de Usuario" }}
@@ -34,8 +33,6 @@ const App = () => {
           component={SeleccionGrupo}
           options={{ title: "Seleccion" }}
         />
-
-        
       </Stack.Navigator>
     </NavigationContainer>
   );

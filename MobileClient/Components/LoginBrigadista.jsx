@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'; // Importa useNavigati
 
 
 const LoginBrigadista = () => {
-  const [cedula, setCedula] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
@@ -16,7 +16,7 @@ const LoginBrigadista = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          cedula,
+          email,
           password,
         }),
       });
@@ -26,8 +26,10 @@ const LoginBrigadista = () => {
       if (response.ok) {
         // Guardar el token en AsyncStorage u otra ubicación segura
         // Navegar a la pantalla de inicio o a cualquier otra pantalla necesaria
+        const brigadistaId = data._id;
         console.log('Inicio de sesión exitoso:', data);
-        navigation.navigate('RegistroBrigadista');
+        navigation.navigate('RegistroGrupos',{ brigadistaId });
+        console.log(brigadistaId);
         // Por ejemplo:
         // navigation.navigate('Home');
       } else {
@@ -46,12 +48,12 @@ const LoginBrigadista = () => {
         <Text style={styles.title}>Inicio de Sesión</Text>
         <Text style={styles.subtitle}>Bienvenido</Text>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Cédula</Text>
+          <Text style={styles.label}>Correo Electronico</Text>
           <TextInput
             style={styles.input}
-            placeholder="Cédula"
-            value={cedula}
-            onChangeText={setCedula}
+            placeholder="Correo Electronico"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View style={styles.inputContainer}>

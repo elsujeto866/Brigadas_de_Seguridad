@@ -49,3 +49,28 @@ export const getHorario = (request, response) => {
       response.status(500).json({ mensaje: 'Ocurrió un error al obtener el horario' });
     });
 }
+
+// Función para obtener una hora por su _id y fecha
+export const getHoraPorIdYFecha = (req, res) => {
+  const { fecha, horaId } = req.params;
+
+  Schedule.findOne({ fecha })
+    .then(horario => {
+      if (!horario) {
+        return res.status(404).json({ mensaje: 'No se encontró el horario para la fecha especificada' });
+      }
+
+      // Buscar la hora por su _id dentro del array de horas del horario encontrado
+      const horaEncontrada = horario.horas.find(hora => hora._id.toString() === horaId);
+      if (!horaEncontrada) {
+        return res.status(404).json({ mensaje: 'No se encontró la hora con el _id especificado' });
+      }
+
+      res.status(200).json({ hora: horaEncontrada });
+    })
+    .catch(error => {
+      console.error('Error al obtener la hora por _id y fecha:', error);
+      res.status(500).json({ mensaje: 'Ocurrió un error al obtener la hora por _id y fecha' });
+    });
+};
+

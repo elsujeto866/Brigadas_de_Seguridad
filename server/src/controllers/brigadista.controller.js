@@ -79,7 +79,7 @@ export const loginBrigadista = (req, res) => {
           }
           const token = createToken({
             id: brigadistaFound._id,
-            role: brigadistaFound.rol,
+            rol: brigadistaFound.rol,
           });
           res.cookie("token", token);
           res.json({
@@ -87,7 +87,7 @@ export const loginBrigadista = (req, res) => {
             firstName: brigadistaFound.firstName,
             lastName: brigadistaFound.lastName,
             email: brigadistaFound.email,
-            role: brigadistaFound.rol,
+            rol: brigadistaFound.rol,
           });
         });
     })

@@ -4,11 +4,11 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'; 
 
 const RegistroBrigadista = () => {
-  const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [telefono, setTelefono] = useState('');
+  const [telephone, setTelephone] = useState('');
   const [cedula, setCedula] = useState('');
 
   const navigation = useNavigation(); // Obtiene el objeto de navegación
@@ -16,18 +16,18 @@ const RegistroBrigadista = () => {
 
   const handleRegistro = async() => {
     // Validaciones de los campos
-    if (!nombre.trim() || !apellido.trim() || !email.trim() || !password.trim() || !telefono.trim() || !cedula.trim()) {
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !telephone.trim() || !cedula.trim()) {
         Alert.alert('Error', 'Por favor completa todos los campos.');
         return;
       }
     
     try {
-        const response = await axios.post('http://192.168.200.5:8000/api/brigadistas/new', {
-          nombre,
-          apellido,
+        const response = await axios.post('http://192.168.200.5:8000/api/brigadista/register', {
+          firstName,
+          lastName,
           email,
           password,
-          telefono,
+          telephone,
           cedula
         });
         console.log('Brigadista registrado:', response.data);
@@ -36,18 +36,17 @@ const RegistroBrigadista = () => {
 
         Alert.alert(
             'Registro exitoso',
-            '¡El brigadista ha sido registrado correctamente!',
-            'En un lapso de 30 minutos recibira una llamada para confirmar su identidad',
+            '¡El brigadista ha sido registrado correctamente! En un lapso de 30 minutos recibira una llamada para confirmar su identidad',
             [
               { text: 'OK', onPress: () => navigation.navigate('LoginBrigadista') }
             ]
           );
 
-        setNombre('');
-        setApellido('');
+        setFirstName('');
+        setLastName('');
         setEmail('');
         setPassword('');
-        setTelefono('');
+        setTelephone('');
         setCedula('');
 
       } catch (error) {
@@ -65,8 +64,8 @@ const RegistroBrigadista = () => {
           <TextInput
             style={styles.input}
             placeholder="Nombre"
-            value={nombre}
-            onChangeText={setNombre}
+            value={firstName}
+            onChangeText={setFirstName}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -74,8 +73,8 @@ const RegistroBrigadista = () => {
           <TextInput
             style={styles.input}
             placeholder="Apellido"
-            value={apellido}
-            onChangeText={setApellido}
+            value={lastName}
+            onChangeText={setLastName}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -103,8 +102,8 @@ const RegistroBrigadista = () => {
             style={styles.input}
             placeholder="Número de Teléfono"
             keyboardType="phone-pad"
-            value={telefono}
-            onChangeText={setTelefono}
+            value={telephone}
+            onChangeText={setTelephone}
           />
         </View>
         <View style={styles.inputContainer}>

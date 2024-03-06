@@ -122,17 +122,10 @@ export const getAllBrigadistas = (_, response) => {
 };
 
 export const updateBrigadista = (request, response) => {
-  const { firstName, lastName, email, telephone, cedula } = request.body;
-  const newData = { firstName, lastName, email, telephone, cedula };
-
-  Brigadista.findOneAndUpdate(
-    { _id: request.params.id },
-    newData,
-    { new: true }
-  )
-    .then((updatedBrigadista) => response.json(updatedBrigadista))
-    .catch((err) => response.json(err));
-};
+  Brigadista.findOneAndUpdate({_id: request.params.id}, request.body, {new:true})
+  .then(updatedBrigadista => response.json(updatedBrigadista))
+  .catch(err => response.json(err))
+}
 
 export const deleteBrigadista = (request, response) => {
   Brigadista.deleteOne({ _id: request.params.id })

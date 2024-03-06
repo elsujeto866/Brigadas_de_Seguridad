@@ -1,27 +1,36 @@
 .formato-crear-grupo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f4f4f4;
-  }
-  
-  .label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .input {
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  .map-image {
-    height: 800px;
-    height: auto;
-    width: 800px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  margin: -25px;
+  background-color: #1c3b6b;
+}
+p {
+  margin: 10px;
+  grid-column: 1 / span 2;
+  text-align: left;
+  font-weight: bold;
+  color: white;
+}
+
+.input {
+  margin: 10px 0;
+  grid-column: 1 / span 2;
+  background-color: white;
+  border-radius: 10px;
+  width: 500px;
+}
+
+.zona {
+  margin: 10px;
+  grid-column: 1 / span 2;
+  background-color: #8B8989;
+  border-radius: 10px;
+}
+.select {
+  margin: 10px 0;
+  grid-column: 1 / span 2;
+}

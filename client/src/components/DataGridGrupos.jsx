@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
+import "./styles/administrarGrupos.css"; 
 
 const columns = [
   {
@@ -72,6 +73,7 @@ export default function DataGridGrupos({ onRowSelection }) {
           checkboxSelection
           autoPageSize={false}
           onRowSelectionModelChange={handleRowSelection}
+          className="datagrid"
         />
       </div>
     </Box>

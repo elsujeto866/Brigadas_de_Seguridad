@@ -95,83 +95,42 @@ export default function EditarGrupo() {
   };
 
   const handleSelect = async () => {
-    if (selectedBrigadista) {
-      console.log(
-        "Seleccionando brigadista como coordinador: ",
-        selectedBrigadista
-      );
-
-      const brigadista = selectedBrigadista; // Almacenar una copia del objeto selectedBrigadista
-
-      const hasCoordinator = integrantes.some(
-        (integrante) => integrante.rol === "coordinador"
-      );
-
-      // Si no hay un coordinador existente, asigna al brigadista seleccionado como coordinador
-      if (!hasCoordinator) {
-        const updatedIntegrantes = integrantes.map((integrante) => {
+    try {
+      const response = await axios.put(`http://localhost:8000/api/brigadista/${selectedBrigadista}`);
+      const brigadista = response.data;
+  
+      if (brigadista) {
+        const hasCoordinator = integrantes.some(integrante => integrante.rol === "coordinador");
+        const newRole = hasCoordinator ? "brigadista" : "coordinador";
+  
+        const updatedIntegrantes = integrantes.map(integrante => {
           if (integrante.id === brigadista.id) {
-            return {
-              ...integrante,
-              rol: "coordinador",
-            };
+            return { ...integrante, rol: newRole };
+          }
+          if (integrante.rol === "coordinador" && newRole === "coordinador") {
+            return { ...integrante, rol: "brigadista" };
           }
           return integrante;
         });
-        setIntegrantes(updatedIntegrantes);
-        setSelectedBrigadista(null); // Reiniciar el estado del brigadista seleccionado
-
-        try {
-          // Llamada a la API para actualizar el rol en la base de datos
-          const response = await axios.put(
-            `http://localhost:8000/api/brigadista/${brigadista.id}`,
-            { rol: "coordinador" }
-          );
-          console.log(response.data.message);
-        } catch (error) {
-          console.error(
-            "Error actualizando rol del brigadista seleccionado:",
-            error
-          );
+  
+        const confirmation = window.confirm(`¿Estás seguro de convertir al brigadista ${brigadista.id} en ${newRole}?`);
+        if (confirmation) {
+          await axios.put(`http://localhost:8000/api/brigadista/${brigadista._id}`, { rol: newRole });
+  
+          setIntegrantes(updatedIntegrantes);
+          setSelectedBrigadista(null);
+  
+          console.log(`Rol del brigadista ${brigadista._id} actualizado a ${newRole}`);
+        } else {
+          console.log("Operación cancelada por el usuario.");
         }
       } else {
-        // Si ya hay un coordinador existente, no necesitas cambiar su rol a "brigadista"
-        // Solo asigna al brigadista seleccionado como coordinador
-        const updatedIntegrantes = integrantes.map((integrante) => {
-          if (integrante.rol === "coordinador") {
-            return {
-              ...integrante,
-              rol: "brigadista",
-            };
-          } else if (integrante.id === brigadista.id) {
-            return {
-              ...integrante,
-              rol: "coordinador",
-            };
-          }
-          return integrante;
-        });
-        setIntegrantes(updatedIntegrantes);
-        setSelectedBrigadista(null); // Reiniciar el estado del brigadista seleccionado
-
-        try {
-          // Llamada a la API para actualizar el rol en la base de datos
-          const response = await axios.put(
-            `http://localhost:8000/api/brigadista/${brigadista.id}`,
-            { rol: "coordinador" }
-          );
-          console.log(response.data.message);
-        } catch (error) {
-          console.error(
-            "Error actualizando rol del brigadista seleccionado:",
-            error
-          );
-        }
+        console.error("El brigadista seleccionado no fue encontrado");
       }
-    } else {
-      console.error("El brigadista seleccionado es indefinido");
+    } catch (error) {
+      console.error("Error al recuperar o actualizar el brigadista:", error);
     }
-  };
+  };  
 
   return (
     <div className="outer-box">
@@ -180,7 +139,7 @@ export default function EditarGrupo() {
           {/* Nombre */}
           <Grid item xs={12} container alignItems="center">
             <Grid item xs={2}>
-              <InputLabel htmlFor="filled-basic" className="label">
+              <InputLabel htmlFor="filled-basic" style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>
                 Nombre:
               </InputLabel>
             </Grid>
@@ -199,7 +158,7 @@ export default function EditarGrupo() {
           {/* Zona */}
           <Grid item xs={12} container alignItems="center">
             <Grid item xs={2}>
-              <InputLabel htmlFor="filled-zone" className="label">
+              <InputLabel htmlFor="filled-zone" style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>
                 Zona:
               </InputLabel>
             </Grid>
@@ -218,8 +177,8 @@ export default function EditarGrupo() {
           {/* Día */}
           <Grid item xs={12} md={4} container alignItems="center">
             <Grid item xs={6}>
-              <InputLabel htmlFor="filled-day" className="label">
-                Día:
+              <InputLabel htmlFor="filled-day" style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>
+                Día: 
               </InputLabel>
             </Grid>
             <Grid item xs={6}>
@@ -243,7 +202,7 @@ export default function EditarGrupo() {
           {/* Horario */}
           <Grid item xs={12} md={8} container alignItems="center">
             <Grid item xs={2}>
-              <InputLabel htmlFor="filled-hour" className="label">
+              <InputLabel htmlFor="filled-hour" style={{ color: "white", fontWeight: "bold", fontSize: "16px" }}>
                 Horario:
               </InputLabel>
             </Grid>
@@ -254,7 +213,9 @@ export default function EditarGrupo() {
                 disabled
                 className="filled-input"
                 value={
-                  scheduleDetails && scheduleDetails.horaInicio && scheduleDetails.horaFin
+                  scheduleDetails &&
+                  scheduleDetails.horaInicio &&
+                  scheduleDetails.horaFin
                     ? `${scheduleDetails.horaInicio} - ${scheduleDetails.horaFin}`
                     : ""
                 }
@@ -274,7 +235,7 @@ export default function EditarGrupo() {
                 setSelectedBrigadista(selectedRow)
               }
             />
-            <BotonGeneral texto="Guardar" />
+            {/*<BotonGeneral texto="Guardar" />*/}
           </Grid>
           {/* Botón */}
           <Grid item xs={2}>

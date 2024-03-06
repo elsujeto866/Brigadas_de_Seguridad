@@ -11,9 +11,9 @@ import {
   Grid,
 } from "@mui/material";
 import Box from "@mui/material/Box";
-
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./styles/validarUsuario.css"
 
 function ValidarUsuario() {
   const [brigadistas, setBrigadistas] = useState([]);
@@ -65,8 +65,8 @@ function ValidarUsuario() {
   };
 
   return (
-    <div>
-      <Grid sx={{ marginTop: "80px" }}>
+    <div className="contenedor-app">
+      <Grid sx={{ margin: "-100px" }}>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>

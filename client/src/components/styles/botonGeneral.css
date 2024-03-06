@@ -1,5 +1,6 @@
 .boton-general {
     align-self: center;
     margin-right: 8px;
+    box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.1); 
   }
   

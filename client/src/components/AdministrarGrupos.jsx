@@ -60,20 +60,20 @@ export default function AdministrarGrupos() {
           noValidate
           autoComplete="off"
         >
-          <TextField id="outlined-basic" label="Grupo" variant="outlined" />
+          <TextField id="outlined-basic" label="Grupo" variant="outlined" className="input"/>
         </Box>
         <div className="contenedor-boton">
-          <BotonGeneral texto="Buscar" />
+          {/*<BotonGeneral texto="Buscar" />*/}
           <Link to="/crear-grupo">
             <BotonGeneral texto="Nuevo" />
           </Link>
         </div>
         <div className="contenedor-datagrid">
           <DataGridGrupos
-            onRowSelection={(selectedRow) => setSelectedGroup(selectedRow)}
+            onRowSelection={(selectedRow) => setSelectedGroup(selectedRow)} className="input"
           />
         </div>
-        <div className="boton-container">
+        <div className="contenedor-boton">
           <BotonGeneral texto="Editar" onClick={handleEdit} />
           <BotonGeneral texto="Eliminar" onClick={handleDelete} />
         </div>

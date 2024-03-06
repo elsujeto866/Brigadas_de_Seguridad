@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 20px;
 }
 
 .main-box {
@@ -28,7 +29,3 @@
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
 }
 
-.label {
-  color: white;
-  font-weight: bold;
-}

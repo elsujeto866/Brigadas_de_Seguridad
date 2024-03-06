@@ -23,7 +23,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink} from 'react-router-dom';
 
 const drawerWidth = 240;
 

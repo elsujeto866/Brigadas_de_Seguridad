@@ -1,0 +1,15 @@
+.contenedor-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1c3b6b;
+  color:white;
+}
+.input-hora {
+  background-color: white;
+  border-radius: 5px;
+  color: black;
+}
+

@@ -19,7 +19,6 @@ export const AdminProvider = ({ children }) => {
   const signin = async (admin) => {
     try {
       const res = await loginRequest(admin);
-      
       setAdmin(res.data);
       setIsAuthenticated(true);
     } catch(error) {

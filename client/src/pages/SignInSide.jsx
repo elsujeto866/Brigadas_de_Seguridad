@@ -40,8 +40,7 @@ export default function SignInSide() {
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: {errors} } = useForm();
-  const { signin , isAuthenticated} = useAdmin();
-  
+  const { signin , isAuthenticated, errors: AdminErrors} = useAdmin();
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/administrar-usuarios");
@@ -204,7 +203,7 @@ export default function SignInSide() {
                 />
               </Grid>
 
-              {errors.em && (
+              {AdminErrors && (
                 <Typography
                   variant="body2"
                   color="error"
@@ -225,7 +224,7 @@ export default function SignInSide() {
               >
                 <b>INGRESAR</b>
               </Button>
-
+                
               <Grid container>
                 <Grid item xs>
                   {" "}

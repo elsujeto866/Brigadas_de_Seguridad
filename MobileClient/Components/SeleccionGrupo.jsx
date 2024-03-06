@@ -50,7 +50,10 @@ const SeleccionGrupos = () => {
   const handleGroupSelection = (group) => {
     if (group.members.length >= group.maxMembers) {
       // Si el grupo está lleno, muestra un mensaje de alerta
-      Alert.alert("Grupo lleno", "Este grupo ya ha alcanzado su capacidad máxima.");
+      Alert.alert(
+        "Grupo lleno",
+        "Este grupo ya ha alcanzado su capacidad máxima."
+      );
     } else {
       // Si el grupo no está lleno, permite al usuario unirse al grupo
       setSelectedGroup(group);
@@ -82,34 +85,26 @@ const SeleccionGrupos = () => {
     return date.toLocaleDateString("es-ES", options);
   };
 
-  const obtenerHorarios = (fecha, horarioId) => {
-    // Obtener la fecha en el formato deseado
-    const fechaFormateada = formatDate(fecha);
-    //console.log("hola")
-    //console.log(horarioId)
-    //console.log(fecha)
-  
-    // Realizar la solicitud para obtener el horario
-    axios.get(`http://192.168.200.5:8000/api/horarios/${fecha}/${horarioId}`)
-      .then(response => {
-        // Obtener la hora de inicio y fin del horario
-        //console.log(response.data)
-        const { horaInicio, horaFin } = response.data.hora;
-        //console.log(response.data.hora.horaFin)
-        // Formatear la hora de inicio y fin en el formato deseado
-        const horarioFormateado = `${horaInicio} - ${horaFin}`;
-        // Renderizar la fecha y el horario
-        console.log(horarioFormateado)
-        return horarioFormateado;
-      })
-      .catch(error => {
-        console.error("Error al obtener los horarios:", error);
-        return "Error al obtener los horarios";
-      });
+  const obtenerHorarios = async (fecha, horarioId) => {
+    try {
+      // Obtener la fecha en el formato deseado
+      const fechaFormateada = formatDate(fecha);
+      // Realizar la solicitud para obtener el horario
+      const response = await axios.get(`http://192.168.200.5:8000/api/horarios/${fecha}/${horarioId}`);
+      // Obtener la hora de inicio y fin del horario
+      const { horaInicio, horaFin } = response.data.hora;
+      // Formatear la hora de inicio y fin en el formato deseado
+      const horaI = response.data.hora.horaInicio.toString();
+      const horarioFormateado = `${horaInicio} - ${horaFin}`;
+      // Retornar el horario formateado
+      console.log(horaI)
+      return horaI;
+    } catch (error) {
+      console.error("Error al obtener los horarios:", error);
+      return "Error al obtener los horarios";
+    }
   };
-
-
-
+  
   return (
     <View style={styles.container}>
       {/* Botones de los días de la semana */}
@@ -159,8 +154,12 @@ const SeleccionGrupos = () => {
               onPress={() => handleGroupSelection(grupo)}
             />
             <Text style={styles.tableData}>{formatDate(grupo.date)}</Text>
-            <Text style={styles.tableData}>{obtenerHorarios(grupo.date,grupo.schedule)}</Text>
-            <Text style={styles.tableData}>{grupo.members.length}/{grupo.maxMembers}</Text>
+            <Text style={styles.tableData}>
+              {`${obtenerHorarios(grupo.date, grupo.schedule)}`}
+            </Text>
+            <Text style={styles.tableData}>
+              {grupo.members.length}/{grupo.maxMembers}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>

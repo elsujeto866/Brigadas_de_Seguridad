@@ -23,17 +23,13 @@ export const registerBrigadista = async (req, res) => {
   const { firstName, lastName, email, password, telephone, cedula } = req.body;
   try {
     //Verificar si el brigadista ya existe por su correo y cedula
-    const existingEmail = await Brigadista.findOne({ email});
+    const existingEmail = await Brigadista.findOne({ email });
     if (existingEmail) {
-      return res
-        .status(400)
-        .json({ error: "El correo ya esta en uso" });
+      return res.status(400).json({ error: "El correo ya esta en uso" });
     }
-    const existingCI = await Brigadista.findOne({cedula });
+    const existingCI = await Brigadista.findOne({ cedula });
     if (existingCI) {
-      return res
-        .status(400)
-        .json({ error: "La cédula ya esta en uso" });
+      return res.status(400).json({ error: "La cédula ya esta en uso" });
     }
     //encriptar la contraseña
     const passwordHash = await bcrypt.hash(password, 10);
@@ -118,23 +114,42 @@ export const profileBrigadista = (req, res) => {
     });
 };
 
-
 ////
 export const getAllBrigadistas = (_, response) => {
   Brigadista.find({})
-  .then(users => response.json(users))
-  .catch(err => response.json(err))
-}
+    .then((users) => response.json(users))
+    .catch((err) => response.json(err));
+};
 
 export const updateBrigadista = (request, response) => {
-  Brigadista.findOneAndUpdate({_id: request.params.id}, request.body, {new:true})
-  .then(updatedBrigadista => response.json(updatedBrigadista))
-  .catch(err => response.json(err))
-}
+  const { firstName, lastName, email, telephone, cedula } = request.body;
+  const newData = { firstName, lastName, email, telephone, cedula };
+
+  Brigadista.findOneAndUpdate(
+    { _id: request.params.id },
+    newData,
+    { new: true }
+  )
+    .then((updatedBrigadista) => response.json(updatedBrigadista))
+    .catch((err) => response.json(err));
+};
 
 export const deleteBrigadista = (request, response) => {
   Brigadista.deleteOne({ _id: request.params.id })
-  .then(brigadistaDeleted => response.json(brigadistaDeleted))
-  .catch(err => response.json(err))
-}
+    .then((brigadistaDeleted) => response.json(brigadistaDeleted))
+    .catch((err) => response.json(err));
+};
 ////
+
+export const getBrigadistaById= async (req, res) => {
+  const { id } = req.params;
+  try {
+    const brigadista = await Brigadista.findById(id);
+    if (!brigadista) {
+      return res.status(404).json({ message: "Brigadista not found" });
+    }
+    res.json(brigadista);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

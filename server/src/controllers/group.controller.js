@@ -1,14 +1,14 @@
 import Group from "../models/group.model.js";
 
 export const createGroup = async (req, res) => {
-  const { name, zone,date,schedule, maxMembers } = req.body;
+  const { name, zone, date, schedule, maxMembers } = req.body;
   try {
     const newGroup = new Group({
       name,
       zone,
       date,
       schedule,
-      maxMembers
+      maxMembers,
     });
 
     const groupSaved = await newGroup.save();
@@ -85,19 +85,19 @@ export const actualizarBrigadistas = (req, res) => {
   const { members } = req.body;
 
   Group.findOneAndUpdate(
-      { _id: id },
-      { $addToSet: { members: members } }, // Agregar brigadistas al array
-      { new: true }
+    { _id: id },
+    { $addToSet: { members: members } }, // Agregar brigadistas al array
+    { new: true }
   )
-  .populate('members') // Popula el array de brigadistas con los documentos completos
-  .exec()
-  .then(grupoActualizado => {
+    .populate("members") // Popula el array de brigadistas con los documentos completos
+    .exec()
+    .then((grupoActualizado) => {
       if (!grupoActualizado) {
-          return res.status(404).json({ message: 'No se encontró el grupo' });
+        return res.status(404).json({ message: "No se encontró el grupo" });
       }
       res.json(grupoActualizado);
-  })
-  .catch(error => res.status(400).json(error));
+    })
+    .catch((error) => res.status(400).json(error));
 };
 
 //funcion para obtener los brigadistas de un grupo
@@ -116,9 +116,23 @@ export const actualizarBrigadistas = (req, res) => {
 };*/
 //Funcion para visualizar un grupo
 export const getBrigadistasGroup = (request, response) => {
-  Group.findOne({_id:request.params.id})
-  .then(group => response.json(group.members))
-  .catch(err => response.json(err))
-}
+  Group.findOne({ _id: request.params.id })
+    .then((group) => response.json(group.members))
+    .catch((err) => response.json(err));
+};
 
-
+// Función para eliminar un miembro de un grupo sin eliminar el miembro en sí
+export const eliminarMiembroGrupo = (req, res) => {
+  const { idMiembro } = req.params;
+  const integrantes = req.body.members;
+  const index = integrantes.findIndex((member) => member._id === idMiembro);
+  if (index !== -1) {
+    // Elimina el miembro del array
+    integrantes.splice(index, 1);
+    return res.status(200).json({ message: "Miembro eliminado exitosamente" });
+  } else {
+    return res
+      .status(404)
+      .json({ message: "Miembro no encontrado en el grupo" });
+  }
+};

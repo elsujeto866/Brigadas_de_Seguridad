@@ -49,3 +49,4 @@ export const getHorario = (request, response) => {
       response.status(500).json({ mensaje: 'Ocurrió un error al obtener el horario' });
     });
 }
+

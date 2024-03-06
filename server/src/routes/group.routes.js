@@ -15,4 +15,8 @@ router.delete('/:id', deleteGroup);
 router.put('/brigadista/:id', actualizarBrigadistas);
 router.get('/brigadistas/:id', getBrigadistasGroup);
 
+// Nueva ruta para obtener grupos por zona
+router.get('/zone/:zone', getGroupsByZone);
+router.delete("/brigadista/:id", eliminarMiembroGrupo);
+
 export default router;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import Box from "@mui/material/Box";
+import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 
 const columns = [
@@ -41,8 +41,8 @@ const columns = [
   },
 ];
 
-export default function DataGridGrupos ({ onRowSelection }) {
-  const [grupos, setGrupos] = useState([]); 
+export default function DataGridGrupos({ onRowSelection }) {
+  const [grupos, setGrupos] = useState([]);
 
   const handleRowSelection = (row) => {
     console.log("Fila seleccionada:", row);
@@ -54,27 +54,26 @@ export default function DataGridGrupos ({ onRowSelection }) {
       .get("http://localhost:8000/api/group/")
       .then((response) => {
         console.log(response);
-        setGrupos(
-          response.data.map((grupo) => ({ ...grupo, id: grupo._id }))
-        );
+        setGrupos(response.data.map((grupo) => ({ ...grupo, id: grupo._id })));
       })
       .catch((error) => {
         console.error("Error fetching grupos:", error);
       });
   }, []);
- return (
-  <Box sx={{ width: "auto" }}>
-  <div className="datagrid-container" style={{ height: 300 }}>
-    <DataGrid
-      rows={grupos}
-      columns={columns}
-      pageSize={5}
-      rowsPerPageOptions={[5]}
-      checkboxSelection
-      autoPageSize={false}
-      onRowSelectionModelChange={handleRowSelection}
-    />
-  </div>
-</Box>
- );
+  
+  return (
+    <Box sx={{ width: "auto" }}>
+      <div className="datagrid-container" style={{ height: 300 }}>
+        <DataGrid
+          rows={grupos}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          autoPageSize={false}
+          onRowSelectionModelChange={handleRowSelection}
+        />
+      </div>
+    </Box>
+  );
 }

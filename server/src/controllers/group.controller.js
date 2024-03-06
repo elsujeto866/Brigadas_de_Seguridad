@@ -121,6 +121,22 @@ export const getBrigadistasGroup = (request, response) => {
     .catch((err) => response.json(err));
 };
 
+export const getGroupsByZone = async (req, res) => {
+  const { zone } = req.params;
+
+  try {
+    const groups = await Group.find({ zone });
+    
+    if (!groups) {
+      return res.status(404).json({ message: "No se encontraron grupos en esta zona" });
+    }
+
+    return res.status(200).json(groups);
+  } catch (error) {
+    return res.status(500).json({ message: "Error al obtener los grupos", error });
+  }
+};
+
 // Función para eliminar un miembro de un grupo sin eliminar el miembro en sí
 export const eliminarMiembroGrupo = (req, res) => {
   const { idMiembro } = req.params;
@@ -135,4 +151,5 @@ export const eliminarMiembroGrupo = (req, res) => {
       .status(404)
       .json({ message: "Miembro no encontrado en el grupo" });
   }
+  
 };

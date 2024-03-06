@@ -48,7 +48,13 @@ const SeleccionGrupos = () => {
   }, [coordenadas]);
 
   const handleGroupSelection = (group) => {
-    setSelectedGroup(group);
+    if (group.members.length >= group.maxMembers) {
+      // Si el grupo está lleno, muestra un mensaje de alerta
+      Alert.alert("Grupo lleno", "Este grupo ya ha alcanzado su capacidad máxima.");
+    } else {
+      // Si el grupo no está lleno, permite al usuario unirse al grupo
+      setSelectedGroup(group);
+    }
   };
 
   // Función para unirse a los grupos seleccionados
@@ -68,6 +74,41 @@ const SeleccionGrupos = () => {
       Alert.alert("Error", "No se pudo unir al grupo seleccionado");
     }
   };
+
+  // Función para formatear la fecha
+  const formatDate = (dateString) => {
+    const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("es-ES", options);
+  };
+
+  const obtenerHorarios = (fecha, horarioId) => {
+    // Obtener la fecha en el formato deseado
+    const fechaFormateada = formatDate(fecha);
+    //console.log("hola")
+    //console.log(horarioId)
+    //console.log(fecha)
+  
+    // Realizar la solicitud para obtener el horario
+    axios.get(`http://192.168.200.5:8000/api/horarios/${fecha}/${horarioId}`)
+      .then(response => {
+        // Obtener la hora de inicio y fin del horario
+        //console.log(response.data)
+        const { horaInicio, horaFin } = response.data.hora;
+        //console.log(response.data.hora.horaFin)
+        // Formatear la hora de inicio y fin en el formato deseado
+        const horarioFormateado = `${horaInicio} - ${horaFin}`;
+        // Renderizar la fecha y el horario
+        console.log(horarioFormateado)
+        return horarioFormateado;
+      })
+      .catch(error => {
+        console.error("Error al obtener los horarios:", error);
+        return "Error al obtener los horarios";
+      });
+  };
+
+
 
   return (
     <View style={styles.container}>
@@ -117,9 +158,9 @@ const SeleccionGrupos = () => {
               checked={selectedGroup && selectedGroup._id === grupo._id}
               onPress={() => handleGroupSelection(grupo)}
             />
-            <Text style={styles.tableData}>{grupo.date}</Text>
-            <Text style={styles.tableData}>{grupo.schedule}</Text>
-            <Text style={styles.tableData}>{grupo.maxMembers}</Text>
+            <Text style={styles.tableData}>{formatDate(grupo.date)}</Text>
+            <Text style={styles.tableData}>{obtenerHorarios(grupo.date,grupo.schedule)}</Text>
+            <Text style={styles.tableData}>{grupo.members.length}/{grupo.maxMembers}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -137,7 +178,6 @@ const SeleccionGrupos = () => {
             {coordenadas.latitude}, {coordenadas.longitude}
           </Text>
         </View>
-        
       </View>
 
       {/* Lista de brigadistas */}
@@ -228,7 +268,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   labelContainer: {
-    flexDirection: 'column',
+    flexDirection: "column",
     marginRight: 60,
   },
   buttonUnirse: {

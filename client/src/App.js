@@ -25,7 +25,7 @@ export default function App() {
             element={<AdministrarUsuarioPage />}
           />
           <Route path="/crear-grupo" element={<CrearGrupoPage />} />
-          <Route path="/editar-grupo" element={<EditarGrupoPage />} />
+          <Route path="/editar-grupo/:id" element={<EditarGrupoPage />} />
 
           <Route path="/crear-horarios" element={<CrearHorariosPage />} />
 

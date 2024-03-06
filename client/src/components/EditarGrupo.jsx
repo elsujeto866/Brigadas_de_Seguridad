@@ -11,7 +11,7 @@ import DataGridUsuario from "./DataGridUsuario";
 
 export default function EditarGrupo() {
   const [grupo, setGrupo] = useState();
-  const [scheduleDetails, setScheduleDetails] = useState();
+  const [scheduleDetails, setScheduleDetails] = useState({});
   const [integrantes, setIntegrantes] = useState([]);
   const { id } = useParams();
   const [selectedBrigadista, setSelectedBrigadista] = useState(null);
@@ -23,17 +23,6 @@ export default function EditarGrupo() {
           `http://localhost:8000/api/group/${id}`
         );
         setGrupo(groupResponse.data);
-
-        if (
-          groupResponse.data &&
-          groupResponse.data.schedule &&
-          groupResponse.data.schedule.length > 0
-        ) {
-          const scheduleResponse = await axios.get(
-            `http://localhost:8000/api/horario/${groupResponse.data.schedule[0]}`
-          );
-          setScheduleDetails(scheduleResponse.data);
-        }
 
         if (
           groupResponse.data &&
@@ -53,6 +42,36 @@ export default function EditarGrupo() {
           }
           setIntegrantes(membersData);
           console.log(membersData);
+        }
+        console.log(groupResponse.data);
+        if (
+          groupResponse.data &&
+          groupResponse.data.schedule &&
+          groupResponse.data.schedule.length > 0
+        ) {
+          const scheduleResponse = await axios.get(
+            `http://localhost:8000/api/horarios/${groupResponse.data.date}`
+          );
+          // Suponiendo que groupResponse.data.schedule contiene el ID que buscas
+          const scheduleId = groupResponse.data.schedule;
+          let matchingHora = null;
+
+          // Itera sobre el array de horas para encontrar el objeto que coincida con el ID
+          for (const hora of scheduleResponse.data.horas) {
+            if (String(hora._id) === String(scheduleId)) {
+              matchingHora = hora;
+              break; // Sal del bucle una vez que encuentres una coincidencia
+            }
+          }
+          // Si encontramos una hora que coincide con el ID, establecemos scheduleDetails
+          if (matchingHora) {
+            setScheduleDetails(matchingHora);
+          } else {
+            console.log(
+              "No se encontró ninguna hora que coincida con el ID:",
+              scheduleId
+            );
+          }
         }
       } catch (error) {
         console.error("Error fetching group data:", error);
@@ -235,12 +254,8 @@ export default function EditarGrupo() {
                 disabled
                 className="filled-input"
                 value={
-                  scheduleDetails
-                    ? scheduleDetails.horas
-                      ? scheduleDetails.horas
-                          .map((hora) => hora.horaInicio + "-" + hora.horaFin)
-                          .join(", ")
-                      : ""
+                  scheduleDetails && scheduleDetails.horaInicio && scheduleDetails.horaFin
+                    ? `${scheduleDetails.horaInicio} - ${scheduleDetails.horaFin}`
                     : ""
                 }
                 sx={{ width: "91%" }}

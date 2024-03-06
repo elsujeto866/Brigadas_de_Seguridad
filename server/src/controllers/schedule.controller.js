@@ -50,19 +50,6 @@ export const getHorario = (request, response) => {
     });
 }
 
-export const getsHorario = async(req, res) => {
-  const {id} = req.params;
-  try {
-    const schedule = await Schedule.findById(id);
-    if (!schedule) {
-      return res.status(404).json({ message: "Group not found" });
-    }
-    res.json(schedule);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
 // Función para obtener una hora por su _id y fecha
 export const getHoraPorIdYFecha = (req, res) => {
   const { fecha, horaId } = req.params;

@@ -7,26 +7,31 @@ import EditarGrupoPage from "./pages/EditarGrupoPage";
 
 import CrearHorariosPage from "./pages/CrearHorariosPage";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AdminProvider } from "./context/AdminContext";
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<SingInSide />}/>
-        <Route path="/administrar-grupos" element={<AdministrarGruposPage/>}/>
-        <Route path="/administrar-usuarios" element={<AdministrarUsuarioPage/>}/>
-        <Route path="/crear-grupo" element={<CrearGrupoPage/>}/>
-        <Route path="/editar-grupo" element={<EditarGrupoPage/>}/>
+    <AdminProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<SingInSide />} />
+          <Route
+            path="/administrar-grupos"
+            element={<AdministrarGruposPage />}
+          />
+          <Route
+            path="/administrar-usuarios"
+            element={<AdministrarUsuarioPage />}
+          />
+          <Route path="/crear-grupo" element={<CrearGrupoPage />} />
+          <Route path="/editar-grupo" element={<EditarGrupoPage />} />
 
-        <Route path="/crear-horarios" element={<CrearHorariosPage/>}/>
+          <Route path="/crear-horarios" element={<CrearHorariosPage />} />
 
-        <Route path="*" element={<NotFoundPage/>}/>
-      </Routes>
-    </Router>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </AdminProvider>
   );
 }

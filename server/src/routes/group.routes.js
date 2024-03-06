@@ -1,5 +1,6 @@
 import { Router } from "express";
-import {getGroups, getGroupById, createGroup, updateGroup, deleteGroup, actualizarBrigadistas,getBrigadistasGroup, eliminarMiembroGrupo} from "../controllers/group.controller.js";
+import {getGroups, getGroupById, createGroup, updateGroup, deleteGroup, actualizarBrigadistas,getBrigadistasGroup, eliminarMiembroGrupo,
+    getGroupsByZone} from "../controllers/group.controller.js";
 import {authRequired} from "../middlewares/validateToken.js";
 
 
@@ -13,5 +14,5 @@ router.delete('/:id', deleteGroup);
 
 router.put('/brigadista/:id', actualizarBrigadistas);
 router.get('/brigadistas/:id', getBrigadistasGroup);
-router.delete("/brigadista/:id", eliminarMiembroGrupo);
+
 export default router;

@@ -116,6 +116,23 @@ export const actualizarBrigadistas = (req, res) => {
 };*/
 //Funcion para visualizar un grupo
 export const getBrigadistasGroup = (request, response) => {
+  Group.findOne({_id:request.params.id})
+  .then(group => response.json(group.members))
+  .catch(err => response.json(err))
+}
+
+//conseguir grupos por zona
+export const getGroupsByZone = async (req, res) => {
+  const { zone } = req.params;
+
+  try {
+    const groups = await Group.find({ zone });
+    res.json(groups);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
   Group.findOne({ _id: request.params.id })
     .then((group) => response.json(group.members))
     .catch((err) => response.json(err));

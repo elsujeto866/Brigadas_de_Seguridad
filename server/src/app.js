@@ -9,6 +9,7 @@ import groupRoutes from './routes/group.routes.js';
 
 const app = express()
 
+//Librería que nos permite hacer peticiones desde el frontend al backend -> comunicación entre distitos puertos
 app.use(cors())
 //Librería que nos muestra por consola las peticiones que se hacen al servidor
 app.use(morgan('dev'))

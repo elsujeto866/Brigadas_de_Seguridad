@@ -6,6 +6,7 @@ import RegistroBrigadista from "./Components/RegistroBrigadista.jsx";
 import LoginBrigadista from "./Components/LoginBrigadista.jsx";
 import RegistroGrupos from "./Components/RegistroGrupos.jsx";
 import SeleccionGrupo from "./Components/SeleccionGrupo.jsx";
+import EsperaValidacion from "./Components/EsperaValidacion.jsx";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -21,6 +22,11 @@ const App = () => {
           name="RegistroBrigadista"
           component={RegistroBrigadista}
           options={{ title: "Registro de Usuario" }}
+        />
+        <Stack.Screen
+          name="EsperaValidacion"
+          component={EsperaValidacion}
+          options={{ title: "Esperando" }}
         />
 
         <Stack.Screen

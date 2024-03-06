@@ -46,7 +46,7 @@ export const registerBrigadista = async (req, res) => {
     //crear token
     const token = await createToken({
       id: brigadistaSaved._id,
-      role: brigadistaSaved.role,
+      rol: brigadistaSaved.rol,
     });
 
     res.cookie("token", token);
@@ -56,7 +56,7 @@ export const registerBrigadista = async (req, res) => {
       firstName: brigadistaSaved.firstName,
       lastName: brigadistaSaved.lastName,
       email: brigadistaSaved.email,
-      role: brigadistaSaved.role,
+      rol: brigadistaSaved.rol,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -88,6 +88,7 @@ export const loginBrigadista = (req, res) => {
             lastName: brigadistaFound.lastName,
             email: brigadistaFound.email,
             rol: brigadistaFound.rol,
+            validation: brigadistaFound.validation,
           });
         });
     })

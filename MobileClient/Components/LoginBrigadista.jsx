@@ -28,10 +28,16 @@ const LoginBrigadista = () => {
         // Navegar a la pantalla de inicio o a cualquier otra pantalla necesaria
         const brigadistaId = data._id;
         console.log('Inicio de sesión exitoso:', data);
-        navigation.navigate('RegistroGrupos',{ brigadistaId });
-        console.log(brigadistaId);
+        console.log(data.rol)
+        //navigation.navigate('RegistroGrupos',{ brigadistaId });
+        //console.log(brigadistaId);
         // Por ejemplo:
         // navigation.navigate('Home');
+        if (data.validation) {
+          navigation.navigate('RegistroGrupos', { brigadistaId }); // Navega a RegistroGrupos si validation es true
+        } else {
+          navigation.navigate('EsperaValidacion', { brigadistaId }); // Navega a EsperaValidacion si validation es false
+        }
       } else {
         // Manejar errores de inicio de sesión, mostrar mensaje de error al usuario
         console.error('Error en inicio de sesión:', data.message);

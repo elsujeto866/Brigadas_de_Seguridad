@@ -8,9 +8,36 @@ const LoginBrigadista = () => {
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
-  const handleLogin = () => {
-    // Aquí iría la lógica para manejar el inicio de sesión
-    console.log('Iniciando sesión...');
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://192.168.200.5:8000/api/brigadista/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          cedula,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Guardar el token en AsyncStorage u otra ubicación segura
+        // Navegar a la pantalla de inicio o a cualquier otra pantalla necesaria
+        console.log('Inicio de sesión exitoso:', data);
+        navigation.navigate('RegistroBrigadista');
+        // Por ejemplo:
+        // navigation.navigate('Home');
+      } else {
+        // Manejar errores de inicio de sesión, mostrar mensaje de error al usuario
+        console.error('Error en inicio de sesión:', data.message);
+      }
+    } catch (error) {
+      console.error('Error al intentar iniciar sesión:', error);
+      // Manejar errores de red u otros errores
+    }
   };
 
   return (

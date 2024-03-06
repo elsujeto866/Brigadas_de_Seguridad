@@ -14,6 +14,11 @@ const App = () => {
       <Stack.Navigator>
 
       <Stack.Screen
+          name="LoginBrigadista"
+          component={LoginBrigadista}
+          options={{ title: "Inicio de Sesion" }}
+        />
+      <Stack.Screen
           name="RegistroBrigadista"
           component={RegistroBrigadista}
           options={{ title: "Registro de Usuario" }}
@@ -30,11 +35,6 @@ const App = () => {
           options={{ title: "Seleccion" }}
         />
 
-        <Stack.Screen
-          name="LoginBrigadista"
-          component={LoginBrigadista}
-          options={{ title: "Inicio de Sesion" }}
-        />
         
       </Stack.Navigator>
     </NavigationContainer>

@@ -62,6 +62,7 @@ export const registerBrigadista = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const loginBrigadista = (req, res) => {
   const { email, password } = req.body;
 
@@ -78,7 +79,7 @@ export const loginBrigadista = (req, res) => {
           }
           const token = createToken({
             id: brigadistaFound._id,
-            role: brigadistaFound.role,
+            role: brigadistaFound.rol,
           });
           res.cookie("token", token);
           res.json({
@@ -86,7 +87,7 @@ export const loginBrigadista = (req, res) => {
             firstName: brigadistaFound.firstName,
             lastName: brigadistaFound.lastName,
             email: brigadistaFound.email,
-            role: brigadistaFound.role,
+            role: brigadistaFound.rol,
           });
         });
     })

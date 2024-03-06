@@ -38,13 +38,16 @@ const SeleccionGrupos = () => {
       Alert.alert('Error', 'No se pudieron obtener los brigadistas');
     }
   };
+  
+ 
 
   useEffect(() => {
     obtenerGrupos();
     obtenerBrigadistas();
   }, [coordenadas]);
 
-  
+ 
+
   const handleGroupSelection = (group) => {
     setSelectedGroup(group);
   };
